@@ -1,26 +1,52 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f7fb;
+  --foreground: #0a0c14;
+  --card-bg: #ffffff;
+  --card-subtle: #f0f2f9;
+  --border-violet: rgba(168, 128, 245, 0.25);
+  --accent-violet: #8b5cf6;
+  --accent-highlight: #a880f5;
+  --accent-glow: rgba(168, 128, 245, 0.15);
+  --grid-violet: rgba(139, 92, 246, 0.05);
+  --text-muted: #4e556e;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0a0c14;
+  --foreground: #f3f4f8;
+  --card-bg: #10131f;
+  --card-subtle: #161a2b;
+  --border-violet: rgba(168, 128, 245, 0.18);
+  --accent-violet: #a880f5;
+  --accent-highlight: #c9aeff;
+  --accent-glow: rgba(168, 128, 245, 0.12);
+  --grid-violet: rgba(168, 128, 245, 0.04);
+  --text-muted: #949ab2;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sora), system-ui, sans-serif;
+}
+
+/* Custom Typography Utilities */
+.font-sora {
+  font-family: var(--font-sora), system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
+
+/* 34px faint grid pattern overlay in low-opacity violet */
+.bg-grid-violet-34 {
+  background-size: 34px 34px;
+  background-image: 
+    linear-gradient(to right, var(--grid-violet) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-violet) 1px, transparent 1px);
 }
