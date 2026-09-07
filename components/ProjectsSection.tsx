@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ExternalLink, Globe, RefreshCw, FolderGit2 } from 'lucide-react';
+import { ExternalLink, RefreshCw, ArrowUpRight, Globe } from 'lucide-react';
 import GithubIcon from '@/components/icons/GithubIcon';
 
 interface ProjectItem {
@@ -14,9 +14,175 @@ interface ProjectItem {
   createdAt: string;
 }
 
-export default function ProjectsSection() {
+/* ─── Static featured projects rendered with browser mockup ─────────────────── */
+const FEATURED = [
+  {
+    id: 'thermorail',
+    slug: 'THERMORAIL',
+    title: 'ThermoRail',
+    url: 'thermo-rail.vercel.app',
+    description:
+      'Real-time railway thermal-risk analytics platform. Ingests live telemetry from 45,955 track segments across the Southwest US, renders heatmap overlays, and surfaces segment-level buckle-risk scores through a high-fidelity data console.',
+    tags: ['Next.js', 'Prisma', 'Mapbox GL', 'Python', 'PySpark'],
+    liveUrl: 'https://thermorail.vercel.app',
+    githubUrl: 'https://github.com/muhammadrohaankhan007',
+    visual: 'thermorail',
+  },
+  {
+    id: 'learn3d',
+    slug: 'LEARN3D',
+    title: 'Learn3D Engine',
+    url: 'learn3d.vercel.app',
+    description:
+      "Gamified physics-education platform rendering an interactive billiards simulation in full 3D. Mission-select driven curriculum teaches Newton's three laws via real cue-ball dynamics, friction vectors, momentum transfer, and chain collisions.",
+    tags: ['React', 'Three.js', 'WebGL', 'Physics Engine', 'TypeScript'],
+    liveUrl: 'https://learn3d.vercel.app',
+    githubUrl: 'https://github.com/muhammadrohaankhan007',
+    visual: 'learn3d',
+  },
+  {
+    id: 'deeptech',
+    slug: 'DEEPTECH',
+    title: 'DeepTech Global',
+    url: 'deeptech.vercel.app',
+    description:
+      "Premium corporate landing page for a deep-technology venture studio. Built to catalyze the transition of Pakistan's complex scientific research into scalable industrial reality — connecting patient capital with frontier engineering.",
+    tags: ['Next.js', 'Three.js', 'Framer Motion', 'TypeScript', 'CSS'],
+    liveUrl: 'https://deeptech.vercel.app',
+    githubUrl: 'https://github.com/muhammadrohaankhan007',
+    visual: 'deeptech',
+  },
+];
+
+/* ─── Browser Mockup Visuals ────────────────────────────────────────────────── */
+function ThermoRailVisual() {
+  return (
+    <div className="w-full h-full overflow-hidden bg-[#f0f2f7]">
+      <img
+        src="/projects/thermorail.png"
+        alt="ThermoRail Dashboard"
+        className="w-full h-full object-cover object-top"
+        draggable={false}
+      />
+    </div>
+  );
+}
+
+function Learn3DVisual() {
+  return (
+    <div className="w-full h-full overflow-hidden bg-[#0d1117]">
+      <img
+        src="/projects/learn3d.png"
+        alt="LEARN3D Physics Engine"
+        className="w-full h-full object-cover object-top"
+        draggable={false}
+      />
+    </div>
+  );
+}
+
+function DeepTechVisual() {
+  return (
+    <div className="w-full h-full overflow-hidden bg-black">
+      <img
+        src="/projects/deeptech.png"
+        alt="DeepTech Global Landing Page"
+        className="w-full h-full object-cover object-top"
+        draggable={false}
+      />
+    </div>
+  );
+}
+
+
+/* ─── Browser Window Wrapper ────────────────────────────────────────────────── */
+function BrowserWindow({ url, children }: { url: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-xl overflow-hidden border border-[#2a2d3e] bg-[#13151f] shadow-2xl shadow-black/60 flex flex-col w-full h-full">
+      {/* Chrome bar */}
+      <div className="flex items-center gap-2 px-3 py-2 bg-[#0f1117] border-b border-[#1e2130] shrink-0">
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+        </div>
+        <div className="flex-1 mx-2 px-2.5 py-1 rounded-md bg-[#1a1d2e] border border-[#2a2d3e] flex items-center gap-1.5 max-w-[280px]">
+          <svg viewBox="0 0 16 16" fill="none" className="w-2.5 h-2.5 shrink-0 text-emerald-400">
+            <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/>
+          </svg>
+          <span className="text-[10px] font-mono text-slate-400 truncate">{url}</span>
+        </div>
+      </div>
+      {/* Content */}
+      <div className="flex-1 overflow-hidden min-h-0">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Individual Project Card ───────────────────────────────────────────────── */
+function ProjectCard({ project, index }: { project: typeof FEATURED[0]; index: number }) {
+  return (
+    <div className="group relative flex flex-col lg:flex-row items-start gap-8 lg:gap-14 py-16 border-b border-[#1e2130] last:border-0 transition-all duration-500">
+      {/* Subtle ambient glow */}
+      <div className="absolute -inset-4 rounded-3xl bg-[#a880f5]/0 group-hover:bg-[#a880f5]/[0.03] transition-all duration-700 pointer-events-none" />
+
+      {/* LEFT: Typography */}
+      <div className="lg:w-[380px] xl:w-[420px] shrink-0 space-y-5 relative z-10">
+        <div className="inline-flex items-center gap-2 text-[10px] font-mono font-semibold text-[#a880f5]/70 tracking-[0.2em] uppercase">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#a880f5] animate-pulse" />
+          <span>ID: {project.slug}</span>
+        </div>
+
+        <h3 className="text-3xl sm:text-4xl lg:text-[40px] font-black tracking-tight text-white leading-[1.1] font-sora">
+          {project.title}
+        </h3>
+
+        <p className="text-sm sm:text-[15px] leading-[1.75] text-[#7a8099] max-w-[46ch]">
+          {project.description}
+        </p>
+
+        <div className="flex flex-wrap gap-1.5">
+          {project.tags.map((tag, i) => (
+            <span
+              key={i}
+              className="px-2.5 py-0.5 rounded-full text-[10px] font-mono border border-[#2a2d3e] bg-[#0f1117] text-[#949ab2] hover:border-[#a880f5]/40 hover:text-[#c9aeff] transition-colors"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {project.liveUrl && (
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-lg border border-[#2a2d3e] hover:border-[#a880f5]/60 text-[#949ab2] hover:text-white bg-transparent hover:bg-[#a880f5]/8 text-[11px] font-mono font-semibold uppercase tracking-widest transition-all duration-300 group/btn"
+          >
+            <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+            LAUNCH DEPLOYED INSTANCE
+          </a>
+        )}
+      </div>
+
+      {/* RIGHT: Browser mockup */}
+      <div className="w-full lg:flex-1 relative z-10" style={{ height: '340px', minHeight: '280px' }}>
+        <BrowserWindow url={project.url}>
+          {project.visual === 'thermorail' && <ThermoRailVisual />}
+          {project.visual === 'learn3d' && <Learn3DVisual />}
+          {project.visual === 'deeptech' && <DeepTechVisual />}
+        </BrowserWindow>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Dynamic Projects from DB ──────────────────────────────────────────────── */
+function DynamicProjects() {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchProjects = async () => {
@@ -34,171 +200,127 @@ export default function ProjectsSection() {
     }
   };
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
+  useEffect(() => { fetchProjects(); }, []);
+
+  if (loading) return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-4">
+      {[1,2,3].map(i => (
+        <div key={i} className="h-48 rounded-xl bg-[#0f1117] border border-[#1e2130] animate-pulse" />
+      ))}
+    </div>
+  );
+
+  if (error) return (
+    <div className="mt-4 p-4 rounded-xl border border-red-900/60 bg-red-950/20 text-red-400 text-sm font-mono">
+      {error}
+    </div>
+  );
+
+  if (projects.length === 0) return null;
 
   return (
-    <section 
-      id="websites" 
-      className="py-24 px-6 bg-stone-50 dark:bg-slate-900/50 border-t border-stone-200 dark:border-slate-800 transition-colors duration-300"
-    >
-      <div className="max-w-6xl mx-auto space-y-12">
-        
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">
-              <Globe className="w-3.5 h-3.5" />
-              <span>03 // Selected Builds & Websites</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-stone-900 dark:text-white">
-              Engineered with intent. Delivered with polish.
-            </h2>
-            <p className="text-base sm:text-lg text-stone-600 dark:text-slate-300 max-w-2xl leading-relaxed">
-              Every system here is driven dynamically from the Prisma ORM database and configured through the Admin Control Panel.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={fetchProjects}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-stone-300 dark:border-slate-700 text-xs font-mono text-stone-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800 transition"
-              title="Refresh project list"
+    <div className="mt-10 pt-10 border-t border-[#1e2130]">
+      <div className="flex items-center justify-between mb-6">
+        <span className="text-xs font-mono text-[#a880f5]/60 tracking-widest uppercase">From the CMS</span>
+        <button
+          onClick={fetchProjects}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#2a2d3e] text-xs font-mono text-[#7a8099] hover:border-[#a880f5]/40 hover:text-[#c9aeff] transition-all"
+        >
+          <RefreshCw className="w-3.5 h-3.5" />
+          Sync
+        </button>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {projects.map((project) => {
+          const tags = project.techStack.split(',').map(t => t.trim()).filter(Boolean);
+          return (
+            <div
+              key={project.id}
+              className="flex flex-col justify-between p-5 rounded-xl bg-[#0f1117] border border-[#1e2130] hover:border-[#a880f5]/30 transition-all duration-300 group"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-              <span>Sync</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Loading State */}
-        {loading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div 
-                key={i} 
-                className="h-64 rounded-2xl bg-stone-200/60 dark:bg-slate-800/50 animate-pulse border border-stone-300/60 dark:border-slate-700/60"
-              />
-            ))}
-          </div>
-        )}
-
-        {/* Error State */}
-        {error && !loading && (
-          <div className="p-6 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/60 text-red-700 dark:text-red-400 text-sm">
-            <p className="font-semibold">Unable to fetch projects:</p>
-            <p className="text-xs font-mono mt-1">{error}</p>
-          </div>
-        )}
-
-        {/* Empty State */}
-        {!loading && !error && projects.length === 0 && (
-          <div className="text-center py-16 px-4 rounded-2xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 space-y-4">
-            <FolderGit2 className="w-12 h-12 text-stone-400 dark:text-slate-600 mx-auto" />
-            <h3 className="text-lg font-bold text-stone-900 dark:text-white">No Projects Published Yet</h3>
-            <p className="text-sm text-stone-600 dark:text-slate-400 max-w-md mx-auto">
-              Use the secret admin key 🔑 in the footer to access the Admin Control Panel and publish your first project.
-            </p>
-            <a
-              href="/admin/dashboard"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition"
-            >
-              Open Admin Dashboard
-            </a>
-          </div>
-        )}
-
-        {/* Projects Grid */}
-        {!loading && projects.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => {
-              const tags = project.techStack
-                .split(',')
-                .map((t) => t.trim())
-                .filter(Boolean);
-
-              return (
-                <div 
-                  key={project.id}
-                  className="flex flex-col justify-between p-6 rounded-2xl bg-white dark:bg-slate-900 border border-stone-200/90 dark:border-slate-800 shadow-xs hover:shadow-xl hover:border-stone-300 dark:hover:border-slate-700 transition-all duration-300 group"
-                >
-                  <div className="space-y-4">
-                    {/* Top Row */}
-                    <div className="flex items-start justify-between gap-4">
-                      <h3 className="text-lg font-bold text-stone-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                        {project.title}
-                      </h3>
-                      <div className="flex items-center gap-2 text-stone-400">
-                        {project.githubUrl && (
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="p-1.5 rounded-lg hover:bg-stone-100 dark:hover:bg-slate-800 hover:text-stone-900 dark:hover:text-white transition"
-                            title="View Source Code"
-                          >
-                            <GithubIcon className="w-4 h-4" />
-                          </a>
-                        )}
-                        {project.liveUrl && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="p-1.5 rounded-lg hover:bg-stone-100 dark:hover:bg-slate-800 hover:text-stone-900 dark:hover:text-white transition"
-                            title="Launch Live Project"
-                          >
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-sm text-stone-600 dark:text-slate-400 leading-relaxed line-clamp-3">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  {/* Tech Stack Tags & Actions */}
-                  <div className="pt-6 mt-6 border-t border-stone-100 dark:border-slate-800/80 space-y-4">
-                    <div className="flex flex-wrap gap-1.5">
-                      {tags.map((tag, idx) => (
-                        <span 
-                          key={idx}
-                          className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-stone-100 dark:bg-slate-800 text-stone-700 dark:text-slate-300 border border-stone-200/80 dark:border-slate-700/60"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs pt-1">
-                      <span className="font-mono text-[11px] text-stone-400 dark:text-slate-500">
-                        {new Date(project.createdAt).toLocaleDateString(undefined, {
-                          month: 'short',
-                          year: 'numeric',
-                        })}
-                      </span>
-                      {project.liveUrl && (
-                        <a 
-                          href={project.liveUrl} 
-                          target="_blank" 
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 font-semibold text-amber-600 dark:text-amber-400 hover:underline"
-                        >
-                          <span>Demo</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
-                    </div>
+              <div className="space-y-3">
+                <h4 className="text-sm font-bold text-white group-hover:text-[#c9aeff] transition-colors">{project.title}</h4>
+                <p className="text-xs text-[#7a8099] leading-relaxed line-clamp-3">{project.description}</p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-[#1e2130] space-y-3">
+                <div className="flex flex-wrap gap-1">
+                  {tags.map((tag, i) => (
+                    <span key={i} className="px-2 py-0.5 rounded-full text-[10px] font-mono border border-[#2a2d3e] text-[#7a8099]">{tag}</span>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-[#4a4d5e]">
+                    {new Date(project.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    {project.githubUrl && (
+                      <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-[#4a4d5e] hover:text-[#a880f5] transition-colors">
+                        <GithubIcon className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                    {project.liveUrl && (
+                      <a href={project.liveUrl} target="_blank" rel="noreferrer" className="text-[#4a4d5e] hover:text-[#a880f5] transition-colors">
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main Export ───────────────────────────────────────────────────────────── */
+export default function ProjectsSection() {
+  return (
+    <section
+      id="websites"
+      className="relative py-24 px-6 bg-[#080a12] overflow-hidden transition-colors duration-300"
+    >
+      {/* Grid pattern */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.025]"
+        style={{
+          backgroundImage: `linear-gradient(to right, #a880f5 1px, transparent 1px), linear-gradient(to bottom, #a880f5 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+        }}
+      />
+      {/* Ambient glows */}
+      <div className="absolute top-1/3 -left-60 w-[500px] h-[500px] bg-[#a880f5]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-60 w-[500px] h-[500px] bg-[#06b6d4]/4 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+
+        {/* Section header */}
+        <div className="mb-16 space-y-4">
+          <div className="inline-flex items-center gap-2 text-[10px] font-mono font-semibold uppercase tracking-[0.2em] text-[#a880f5]">
+            <Globe className="w-3 h-3" />
+            <span>03 // Selected Builds &amp; Websites</span>
           </div>
-        )}
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight font-sora">
+            Engineered with intent.<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8b5cf6] via-[#a880f5] to-[#06b6d4]">
+              Delivered with polish.
+            </span>
+          </h2>
+          <p className="text-sm sm:text-base text-[#7a8099] max-w-[52ch] leading-relaxed">
+            Three flagship systems — each purpose-built, production-deployed, and driven by real engineering constraints.
+          </p>
+        </div>
+
+        {/* Featured Projects */}
+        <div className="divide-y divide-[#1e2130]">
+          {FEATURED.map((project, i) => (
+            <ProjectCard key={project.id} project={project} index={i} />
+          ))}
+        </div>
+
+        {/* CMS-driven projects */}
+        <DynamicProjects />
 
       </div>
     </section>
