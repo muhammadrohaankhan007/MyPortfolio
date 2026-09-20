@@ -1,7 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
-import Achievements from '@/components/Achievements';
 import ProjectsSection from '@/components/ProjectsSection';
 import Footer from '@/components/Footer';
 
@@ -12,7 +11,6 @@ export default function Home() {
       <main className="flex-1 w-full">
         <Hero />
         <About />
-        <Achievements />
         <ProjectsSection />
       </main>
       <Footer />

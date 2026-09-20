@@ -23,13 +23,13 @@ export default function Navbar() {
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-      const sections = ['websites', 'achievements', 'about'];
+      const sections = ['projects', 'websites', 'about'];
       const scrollPosition = window.scrollY + 200;
 
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el && el.offsetTop <= scrollPosition) {
-          setActiveSection(section);
+          setActiveSection(section === 'websites' ? 'projects' : section);
           return;
         }
       }
@@ -92,25 +92,14 @@ export default function Navbar() {
           </a>
 
           <a
-            href="#achievements"
+            href="#projects"
             className={`px-3 py-1.5 rounded-full transition-all duration-200 ${
-              activeSection === 'achievements'
+              activeSection === 'projects' || activeSection === 'websites'
                 ? 'bg-[#a880f5] text-[#0a0c14] font-bold shadow-xs shadow-[#a880f5]/30'
                 : 'text-[#4e556e] dark:text-[#949ab2] hover:text-[#0a0c14] dark:hover:text-[#c9aeff] hover:bg-[#a880f5]/10'
             }`}
           >
-            Achievements
-          </a>
-
-          <a
-            href="#websites"
-            className={`px-3 py-1.5 rounded-full transition-all duration-200 ${
-              activeSection === 'websites'
-                ? 'bg-[#a880f5] text-[#0a0c14] font-bold shadow-xs shadow-[#a880f5]/30'
-                : 'text-[#4e556e] dark:text-[#949ab2] hover:text-[#0a0c14] dark:hover:text-[#c9aeff] hover:bg-[#a880f5]/10'
-            }`}
-          >
-            Websites
+            Projects
           </a>
         </div>
 
