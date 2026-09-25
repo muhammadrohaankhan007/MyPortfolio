@@ -23,7 +23,7 @@ export default function Navbar() {
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-      const sections = ['projects', 'websites', 'about'];
+      const sections = ['achievements', 'projects', 'websites', 'about'];
       const scrollPosition = window.scrollY + 200;
 
       for (const section of sections) {
@@ -100,6 +100,17 @@ export default function Navbar() {
             }`}
           >
             Projects
+          </a>
+
+          <a
+            href="#achievements"
+            className={`px-3 py-1.5 rounded-full transition-all duration-200 ${
+              activeSection === 'achievements'
+                ? 'bg-[#a880f5] text-[#0a0c14] font-bold shadow-xs shadow-[#a880f5]/30'
+                : 'text-[#4e556e] dark:text-[#949ab2] hover:text-[#0a0c14] dark:hover:text-[#c9aeff] hover:bg-[#a880f5]/10'
+            }`}
+          >
+            Achievements
           </a>
         </div>
 
